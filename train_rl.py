@@ -31,6 +31,13 @@ import time
 import json
 from typing import Any, Dict, List
 
+# Try to import torch for GPU detection
+try:
+    import torch
+    TORCH_AVAILABLE = True
+except ImportError:
+    TORCH_AVAILABLE = False
+
 
 def load_config(config_path: str = None) -> Dict[str, Any]:
     """Load configuration from YAML file."""
@@ -98,18 +105,29 @@ def make_model(algo: str, env: gym.Env, seed: int):
     policy = "MlpPolicy"
     algo_settings = CONFIG.get("algorithm_settings", {}).get(algo, {})
     
+    # Auto-detect GPU if available
+    if TORCH_AVAILABLE and torch.cuda.is_available():
+        device = "cuda"
+        print(f"[INFO] Using GPU: {torch.cuda.get_device_name(0)}")
+    else:
+        device = "cpu"
+        if TORCH_AVAILABLE:
+            print(f"[INFO] GPU not available, using CPU")
+        else:
+            print(f"[INFO] PyTorch not available, using CPU")
+    
     if algo == "SAC":
-        model = SAC(policy, env, verbose=0, seed=seed)
+        model = SAC(policy, env, verbose=0, seed=seed, device=device)
     elif algo == "TD3":
         sigma = algo_settings.get("action_noise", {}).get("sigma", 0.1)
         noise = _build_action_noise(env, sigma=sigma)
-        model = TD3(policy, env, action_noise=noise, verbose=0, seed=seed)
+        model = TD3(policy, env, action_noise=noise, verbose=0, seed=seed, device=device)
     elif algo == "DDPG":
         sigma = algo_settings.get("action_noise", {}).get("sigma", 0.1)
         noise = _build_action_noise(env, sigma=sigma)
-        model = DDPG(policy, env, action_noise=noise, verbose=0, seed=seed)
+        model = DDPG(policy, env, action_noise=noise, verbose=0, seed=seed, device=device)
     elif algo == "PPO":
-        model = PPO(policy, env, verbose=0, seed=seed)
+        model = PPO(policy, env, verbose=0, seed=seed, device=device)
     else:
         raise ValueError(f"Unknown algorithm: {algo}")
     return model

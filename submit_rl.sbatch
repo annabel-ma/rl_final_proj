@@ -1,13 +1,15 @@
 #!/bin/bash
 #SBATCH -J rl-training
 #SBATCH -c 1
-#SBATCH -t 0-48:00:00
-#SBATCH -p mweber_compute
+#SBATCH -t 0-72:00:00
+#SBATCH -p mweber_gpu
 #SBATCH --mem=8000
+#SBATCH --gres=gpu:1
 #SBATCH --open-mode=append
 #SBATCH -o logs/rl_%A_%a.out
 #SBATCH -e logs/rl_%A_%a.err
-#SBATCH --array=1-100%20
+#SBATCH --array=81-100
+#SBATCH --account=dam_lab
 
 # PARALLEL EXECUTION: This script runs multiple jobs in parallel!
 # The --array=1-N%M means:

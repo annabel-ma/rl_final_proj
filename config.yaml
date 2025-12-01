@@ -65,4 +65,7 @@ slurm:
   memory_mb: 8000
   # Time limit (days-hours:minutes:seconds)
   time_limit: "0-48:00:00"
+  # GPU settings
+  use_gpu: true  # Set to false to use CPU only
+  gpu_count: 1   # Number of GPUs per job
 
