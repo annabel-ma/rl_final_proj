@@ -1,17 +1,17 @@
 #!/bin/bash
-#SBATCH -J rl-training
+#SBATCH -J rl-training-reverse
 #SBATCH -c 1
 #SBATCH -t 0-72:00:00
-#SBATCH -p mweber_gpu
+#SBATCH -p gpu_requeue
 #SBATCH --mem=8000
-#SBATCH --open-mode=append
-#SBATCH -o /n/home09/annabelma/rl_final_proj/logs_mweber/rl_%A_%a.out
-#SBATCH -e /n/home09/annabelma/rl_final_proj/logs_mweber/rl_%A_%a.err
-#SBATCH --array=450-900%1
-#SBATCH --account=dam_lab
 #SBATCH --gres=gpu:1
+#SBATCH --open-mode=append
+#SBATCH -o logs_reverse/rl_reverse_%A_%a.out
+#SBATCH -e logs_reverse/rl_reverse_%A_%a.err
+#SBATCH --array=1-3920
 
-# PARALLEL EXECUTION: This script runs multiple jobs in parallel!
+# REVERSE ORDER EXECUTION: This script processes the joblist in reverse order!
+# Array task ID 1 reads the LAST line, task ID 2 reads second-to-last, etc.
 # The --array=1-N%M means:
 #   - Run jobs 1 through N (total jobs)
 #   - %M means run at most M jobs concurrently
@@ -23,10 +23,32 @@
 # test with python train_rl.py --task "Hopper-v5" --algorithm "SAC" --seed 0
 
 set -euo pipefail
-# Use SLURM_SUBMIT_DIR which is set to the directory where you ran sbatch
-# Fall back to script location if SLURM_SUBMIT_DIR is not set
-SCRIPT_DIR="${SLURM_SUBMIT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+# Determine the project directory
+# First try SLURM_SUBMIT_DIR (where you ran sbatch from)
+# Then try to find the script's actual location
+# Finally, try a known project path
+if [[ -n "${SLURM_SUBMIT_DIR:-}" ]]; then
+    # If SLURM_SUBMIT_DIR is set, check if it's the project directory
+    if [[ -f "${SLURM_SUBMIT_DIR}/joblist.txt" && -d "${SLURM_SUBMIT_DIR}/venv" ]]; then
+        SCRIPT_DIR="$SLURM_SUBMIT_DIR"
+    else
+        # SLURM_SUBMIT_DIR might be home directory, try to find project
+        SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+        # If that doesn't work, use known project path
+        if [[ ! -f "$SCRIPT_DIR/joblist.txt" ]]; then
+            SCRIPT_DIR="/n/home09/annabelma/rl_final_proj"
+        fi
+    fi
+else
+    # No SLURM_SUBMIT_DIR, use script location
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    # Fallback to known path
+    if [[ ! -f "$SCRIPT_DIR/joblist.txt" ]]; then
+        SCRIPT_DIR="/n/home09/annabelma/rl_final_proj"
+    fi
+fi
 cd "$SCRIPT_DIR"
+echo "Working directory: $SCRIPT_DIR"
 # Create logs directory if it doesn't exist (ignore errors if it already exists)
 LOGS_DIR="$SCRIPT_DIR/logs"
 if [[ ! -d "$LOGS_DIR" ]]; then
@@ -85,15 +107,18 @@ echo "==========================="
 JOBLIST="${JOBLIST:-$SCRIPT_DIR/joblist.txt}"
 [[ -f "$JOBLIST" ]] || { echo "ERROR: $JOBLIST not found. Run generate_joblist.py first."; exit 1; }
 
-# Get the line from joblist
+# Get the line from joblist (REVERSED: array task 1 reads last line, task 2 reads second-to-last, etc.)
 NLINES=$(wc -l < "$JOBLIST")
-LIDX=${SLURM_ARRAY_TASK_ID:?need array id}
+ARRAY_ID=${SLURM_ARRAY_TASK_ID:?need array id}
+# Reverse the index: LIDX = NLINES - ARRAY_ID + 1
+# So array task 1 -> line NLINES, task 2 -> line NLINES-1, etc.
+LIDX=$((NLINES - ARRAY_ID + 1))
 (( LIDX>=1 && LIDX<=NLINES )) || { echo "Index $LIDX out of range (1-$NLINES)"; exit 0; }
 
 # Read task, algorithm, seed from joblist
 read -r TASK ALGO SEED < <(sed -n "${LIDX}p" "$JOBLIST")
 
-echo "=== [START] Job $SLURM_JOB_ID task $SLURM_ARRAY_TASK_ID ($LIDX/$NLINES) ==="
+echo "=== [START] Job $SLURM_JOB_ID task $SLURM_ARRAY_TASK_ID (REVERSE: line $LIDX/$NLINES) ==="
 echo "    Task:      $TASK"
 echo "    Algorithm: $ALGO"
 echo "    Seed:      $SEED"
@@ -106,5 +131,4 @@ python -u train_rl.py \
     --seed "$SEED" \
     --eval-episodes 20
 
-echo "=== [FINISH] Job $SLURM_JOB_ID task $SLURM_ARRAY_TASK_ID ($LIDX/$NLINES) ==="
-
+echo "=== [FINISH] Job $SLURM_JOB_ID task $SLURM_ARRAY_TASK_ID (REVERSE: line $LIDX/$NLINES) ==="

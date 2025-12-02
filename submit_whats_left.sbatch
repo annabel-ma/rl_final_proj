@@ -5,9 +5,9 @@
 #SBATCH -p mweber_gpu
 #SBATCH --mem=8000
 #SBATCH --open-mode=append
-#SBATCH -o /n/home09/annabelma/rl_final_proj/logs_mweber/rl_%A_%a.out
-#SBATCH -e /n/home09/annabelma/rl_final_proj/logs_mweber/rl_%A_%a.err
-#SBATCH --array=450-900%1
+#SBATCH -o /n/home09/annabelma/rl_final_proj/logs_whatsleft/rl_%A_%a.out
+#SBATCH -e /n/home09/annabelma/rl_final_proj/logs_whatsleft/rl_%A_%a.err
+#SBATCH --array=1-753%1
 #SBATCH --account=dam_lab
 #SBATCH --gres=gpu:1
 
@@ -81,9 +81,9 @@ if command -v nvidia-smi &> /dev/null; then
 fi
 echo "==========================="
 
-# Job list file
-JOBLIST="${JOBLIST:-$SCRIPT_DIR/joblist.txt}"
-[[ -f "$JOBLIST" ]] || { echo "ERROR: $JOBLIST not found. Run generate_joblist.py first."; exit 1; }
+# Job list file - using joblist2.txt (missing seeds 5-54)
+JOBLIST="${JOBLIST:-$SCRIPT_DIR/joblist2.txt}"
+[[ -f "$JOBLIST" ]] || { echo "ERROR: $JOBLIST not found. Run script to generate joblist2.txt first."; exit 1; }
 
 # Get the line from joblist
 NLINES=$(wc -l < "$JOBLIST")

@@ -38,14 +38,17 @@ if __name__ == "__main__":
     
     joblist_path = args.output
     with open(joblist_path, "w") as f:
-        for task in tasks:
+        # Order: for each seed, for each algorithm, for each task
+        # This groups all tasks for all algorithms for each seed together
+        for seed in seeds:
             for algo in algorithms:
-                for seed in seeds:
+                for task in tasks:
                     # Format: TASK ALGORITHM SEED
                     f.write(f"{task} {algo} {seed}\n")
     
     total_jobs = len(tasks) * len(algorithms) * len(seeds)
     print(f"Generated {joblist_path} with {total_jobs} jobs")
+    print(f"  Order: seeds × algorithms × tasks")
     print(f"  Tasks: {len(tasks)}")
     print(f"  Algorithms: {len(algorithms)}")
     print(f"  Seeds: {len(seeds)}")
