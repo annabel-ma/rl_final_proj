@@ -1,0 +1,140 @@
+Complete Log File Mapping for All Running Jobs
+================================================================================
+
+Total Running Jobs: 114
+
+Jobs with logs: 97
+Jobs without logs: 17
+
+================================================================================
+
+📁 logs/ (7 jobs)
+--------------------------------------------------------------------------------
+48482358_25          -> logs/rl_48482358_25.out                            | Humanoid-v5 | SAC | seed=6
+48482358_45          -> logs/rl_48482358_45.out                            | Humanoid-v5 | SAC | seed=7
+48482358_65          -> logs/rl_48482358_65.out                            | Humanoid-v5 | SAC | seed=8
+48482358_85          -> logs/rl_48482358_85.out                            | Humanoid-v5 | SAC | seed=9
+48482481_145         -> logs/rl_48482481_145.out                           | Humanoid-v5 | SAC | seed=12
+48482481_465         -> logs/rl_48482481_465.out                           | Humanoid-v5 | SAC | seed=28
+48482481_965         -> logs/rl_48482481_965.out                           | Humanoid-v5 | SAC | seed=53
+
+📁 logs_mweber/ (1 jobs)
+--------------------------------------------------------------------------------
+48580721_455         -> logs_mweber/rl_48580721_455.out                    | Humanoid-v5 | DDPG | seed=27
+
+📁 logs_new_script/ (51 jobs)
+--------------------------------------------------------------------------------
+48544641_143         -> logs_new_script/rl_48544641_143.out                | HalfCheetah-v5 | SAC | seed=12
+48544641_144         -> logs_new_script/rl_48544641_144.out                | Ant-v5 | SAC | seed=12
+48544641_148         -> logs_new_script/rl_48544641_148.out                | HalfCheetah-v5 | TD3 | seed=12
+48544641_149         -> logs_new_script/rl_48544641_149.out                | Ant-v5 | TD3 | seed=12
+48544641_150         -> logs_new_script/rl_48544641_150.out                | Humanoid-v5 | TD3 | seed=12
+48544641_155         -> logs_new_script/rl_48544641_155.out                | Humanoid-v5 | DDPG | seed=12
+48544641_163         -> logs_new_script/rl_48544641_163.out                | HalfCheetah-v5 | SAC | seed=13
+48544641_164         -> logs_new_script/rl_48544641_164.out                | Ant-v5 | SAC | seed=13
+48544641_165         -> logs_new_script/rl_48544641_165.out                | Humanoid-v5 | SAC | seed=13
+48544641_168         -> logs_new_script/rl_48544641_168.out                | HalfCheetah-v5 | TD3 | seed=13
+48544641_169         -> logs_new_script/rl_48544641_169.out                | Ant-v5 | TD3 | seed=13
+48544641_170         -> logs_new_script/rl_48544641_170.out                | Humanoid-v5 | TD3 | seed=13
+48544641_173         -> logs_new_script/rl_48544641_173.out                | HalfCheetah-v5 | DDPG | seed=13
+48544641_174         -> logs_new_script/rl_48544641_174.out                | Ant-v5 | DDPG | seed=13
+48544641_175         -> logs_new_script/rl_48544641_175.out                | Humanoid-v5 | DDPG | seed=13
+48544641_180         -> logs_new_script/rl_48544641_180.out                | Humanoid-v5 | PPO | seed=13
+48544641_183         -> logs_new_script/rl_48544641_183.out                | HalfCheetah-v5 | SAC | seed=14
+48544641_184         -> logs_new_script/rl_48544641_184.out                | Ant-v5 | SAC | seed=14
+48544641_185         -> logs_new_script/rl_48544641_185.out                | Humanoid-v5 | SAC | seed=14
+48544641_189         -> logs_new_script/rl_48544641_189.out                | Ant-v5 | TD3 | seed=14
+48544641_190         -> logs_new_script/rl_48544641_190.out                | Humanoid-v5 | TD3 | seed=14
+48544641_193         -> logs_new_script/rl_48544641_193.out                | HalfCheetah-v5 | DDPG | seed=14
+48544641_194         -> logs_new_script/rl_48544641_194.out                | Ant-v5 | DDPG | seed=14
+48544641_198         -> logs_new_script/rl_48544641_198.out                | HalfCheetah-v5 | PPO | seed=14
+48544641_199         -> logs_new_script/rl_48544641_199.out                | Ant-v5 | PPO | seed=14
+48544641_202         -> logs_new_script/rl_48544641_202.out                | Walker2d-v5 | SAC | seed=15
+48544641_204         -> logs_new_script/rl_48544641_204.out                | Ant-v5 | SAC | seed=15
+48544641_207         -> logs_new_script/rl_48544641_207.out                | Walker2d-v5 | TD3 | seed=15
+48544641_208         -> logs_new_script/rl_48544641_208.out                | HalfCheetah-v5 | TD3 | seed=15
+48544641_209         -> logs_new_script/rl_48544641_209.out                | Ant-v5 | TD3 | seed=15
+48544641_211         -> logs_new_script/rl_48544641_211.out                | Hopper-v5 | DDPG | seed=15
+48544641_218         -> logs_new_script/rl_48544641_218.out                | HalfCheetah-v5 | PPO | seed=15
+48544641_222         -> logs_new_script/rl_48544641_222.out                | Walker2d-v5 | SAC | seed=16
+48544641_223         -> logs_new_script/rl_48544641_223.out                | HalfCheetah-v5 | SAC | seed=16
+48544641_227         -> logs_new_script/rl_48544641_227.out                | Walker2d-v5 | TD3 | seed=16
+48544641_228         -> logs_new_script/rl_48544641_228.out                | HalfCheetah-v5 | TD3 | seed=16
+48544641_229         -> logs_new_script/rl_48544641_229.out                | Ant-v5 | TD3 | seed=16
+48544641_231         -> logs_new_script/rl_48544641_231.out                | Hopper-v5 | DDPG | seed=16
+48544641_232         -> logs_new_script/rl_48544641_232.out                | Walker2d-v5 | DDPG | seed=16
+48544641_233         -> logs_new_script/rl_48544641_233.out                | HalfCheetah-v5 | DDPG | seed=16
+48544641_234         -> logs_new_script/rl_48544641_234.out                | Ant-v5 | DDPG | seed=16
+48544641_238         -> logs_new_script/rl_48544641_238.out                | HalfCheetah-v5 | PPO | seed=16
+48544641_239         -> logs_new_script/rl_48544641_239.out                | Ant-v5 | PPO | seed=16
+48544641_242         -> logs_new_script/rl_48544641_242.out                | Walker2d-v5 | SAC | seed=17
+48544641_247         -> logs_new_script/rl_48544641_247.out                | Walker2d-v5 | TD3 | seed=17
+48544641_25          -> logs_new_script/rl_48544641_25.out                 | Humanoid-v5 | SAC | seed=6
+48544641_45          -> logs_new_script/rl_48544641_45.out                 | Humanoid-v5 | SAC | seed=7
+48544641_5           -> logs_new_script/rl_48544641_5.out                  | Humanoid-v5 | SAC | seed=5
+48544641_65          -> logs_new_script/rl_48544641_65.out                 | Humanoid-v5 | SAC | seed=8
+48544641_75          -> logs_new_script/rl_48544641_75.out                 | Humanoid-v5 | DDPG | seed=8
+48544641_85          -> logs_new_script/rl_48544641_85.out                 | Humanoid-v5 | SAC | seed=9
+
+📁 logs_whatsleft/ (38 jobs)
+--------------------------------------------------------------------------------
+48596451_10          -> logs_whatsleft/rl_48596451_10.out                  | Humanoid-v5 | TD3 | seed=9
+48596451_14          -> logs_whatsleft/rl_48596451_14.out                  | Humanoid-v5 | DDPG | seed=10
+48596451_23          -> logs_whatsleft/rl_48596451_23.out                  | Humanoid-v5 | SAC | seed=10
+48596451_28          -> logs_whatsleft/rl_48596451_28.out                  | Humanoid-v5 | TD3 | seed=10
+48596451_32          -> logs_whatsleft/rl_48596451_32.out                  | Humanoid-v5 | DDPG | seed=11
+48596451_39          -> logs_whatsleft/rl_48596451_39.out                  | Humanoid-v5 | SAC | seed=11
+48596451_4           -> logs_whatsleft/rl_48596451_4.out                   | Humanoid-v5 | DDPG | seed=9
+48596451_43          -> logs_whatsleft/rl_48596451_43.out                  | Humanoid-v5 | TD3 | seed=11
+48638498_1           -> logs_whatsleft/rl_48638498_1.out                   | Humanoid-v5 | DDPG | seed=14
+48638498_12          -> logs_whatsleft/rl_48638498_12.out                  | Humanoid-v5 | TD3 | seed=17
+48638498_13          -> logs_whatsleft/rl_48638498_13.out                  | Humanoid-v5 | DDPG | seed=17
+48638498_14          -> logs_whatsleft/rl_48638498_14.out                  | Humanoid-v5 | PPO | seed=17
+48638498_15          -> logs_whatsleft/rl_48638498_15.out                  | Humanoid-v5 | SAC | seed=18
+48638498_16          -> logs_whatsleft/rl_48638498_16.out                  | Humanoid-v5 | TD3 | seed=18
+48638498_17          -> logs_whatsleft/rl_48638498_17.out                  | Humanoid-v5 | DDPG | seed=18
+48638498_18          -> logs_whatsleft/rl_48638498_18.out                  | Humanoid-v5 | PPO | seed=18
+48638498_19          -> logs_whatsleft/rl_48638498_19.out                  | Humanoid-v5 | SAC | seed=19
+48638498_2           -> logs_whatsleft/rl_48638498_2.out                   | Humanoid-v5 | PPO | seed=14
+48638498_20          -> logs_whatsleft/rl_48638498_20.out                  | Humanoid-v5 | TD3 | seed=19
+48638498_21          -> logs_whatsleft/rl_48638498_21.out                  | Humanoid-v5 | DDPG | seed=19
+48638498_22          -> logs_whatsleft/rl_48638498_22.out                  | Humanoid-v5 | PPO | seed=19
+48638498_24          -> logs_whatsleft/rl_48638498_24.out                  | Humanoid-v5 | TD3 | seed=20
+48638498_25          -> logs_whatsleft/rl_48638498_25.out                  | Humanoid-v5 | DDPG | seed=20
+48638498_26          -> logs_whatsleft/rl_48638498_26.out                  | Humanoid-v5 | PPO | seed=20
+48638498_27          -> logs_whatsleft/rl_48638498_27.out                  | Humanoid-v5 | SAC | seed=21
+48638498_28          -> logs_whatsleft/rl_48638498_28.out                  | Humanoid-v5 | TD3 | seed=21
+48638498_29          -> logs_whatsleft/rl_48638498_29.out                  | Humanoid-v5 | DDPG | seed=21
+48638498_3           -> logs_whatsleft/rl_48638498_3.out                   | Humanoid-v5 | SAC | seed=15
+48638498_30          -> logs_whatsleft/rl_48638498_30.out                  | Humanoid-v5 | PPO | seed=21
+48638498_31          -> logs_whatsleft/rl_48638498_31.out                  | Humanoid-v5 | SAC | seed=22
+48638498_32          -> logs_whatsleft/rl_48638498_32.out                  | Humanoid-v5 | TD3 | seed=22
+48638498_33          -> logs_whatsleft/rl_48638498_33.out                  | Humanoid-v5 | DDPG | seed=22
+48638498_34          -> logs_whatsleft/rl_48638498_34.out                  | Humanoid-v5 | PPO | seed=22
+48638498_35          -> logs_whatsleft/rl_48638498_35.out                  | Humanoid-v5 | SAC | seed=23
+48638498_4           -> logs_whatsleft/rl_48638498_4.out                   | Humanoid-v5 | TD3 | seed=15
+48638498_7           -> logs_whatsleft/rl_48638498_7.out                   | Humanoid-v5 | SAC | seed=16
+48638498_8           -> logs_whatsleft/rl_48638498_8.out                   | Humanoid-v5 | TD3 | seed=16
+48638498_9           -> logs_whatsleft/rl_48638498_9.out                   | Humanoid-v5 | DDPG | seed=16
+
+⚠️  JOBS WITHOUT LOG FILES
+--------------------------------------------------------------------------------
+48488999_131
+48488999_156
+48488999_196
+48488999_2276
+48488999_2446
+48488999_256
+48488999_3296
+48488999_336
+48488999_3406
+48488999_3411
+48488999_3516
+48488999_36
+48488999_3616
+48488999_3676
+48488999_376
+48488999_916
+48488999_96
+
+

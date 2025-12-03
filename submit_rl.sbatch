@@ -7,7 +7,7 @@
 #SBATCH --open-mode=append
 #SBATCH -o /n/home09/annabelma/rl_final_proj/logs_mweber/rl_%A_%a.out
 #SBATCH -e /n/home09/annabelma/rl_final_proj/logs_mweber/rl_%A_%a.err
-#SBATCH --array=450-900%1
+#SBATCH --array=450-900%
 #SBATCH --account=dam_lab
 #SBATCH --gres=gpu:1
 
