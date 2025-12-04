@@ -5,9 +5,9 @@
 #SBATCH -p mweber_gpu
 #SBATCH --mem=8000
 #SBATCH --open-mode=append
-#SBATCH -o /n/home09/annabelma/rl_final_proj/logs_whatsleft/rl_%A_%a.out
-#SBATCH -e /n/home09/annabelma/rl_final_proj/logs_whatsleft/rl_%A_%a.err
-#SBATCH --array=41-41
+#SBATCH -o /n/home09/annabelma/rl_final_proj/logs_remaining_humanoid/rl_%A_%a.out
+#SBATCH -e /n/home09/annabelma/rl_final_proj/logs_remaining_humanoid/rl_%A_%a.err
+#SBATCH --array=1-605%30
 #SBATCH --gres=gpu:1
 
 # PARALLEL EXECUTION: This script runs multiple jobs in parallel!
@@ -80,9 +80,9 @@ if command -v nvidia-smi &> /dev/null; then
 fi
 echo "==========================="
 
-# Job list file - using joblist_humanoid.txt (missing seeds 5-54)
-JOBLIST="${JOBLIST:-$SCRIPT_DIR/joblist_humanoid.txt}"
-[[ -f "$JOBLIST" ]] || { echo "ERROR: $JOBLIST not found. Run script to generate joblist_humanoid.txt first."; exit 1; }
+# Job list file - using joblist_humanoid2.txt (missing seeds 5-54)
+JOBLIST="${JOBLIST:-$SCRIPT_DIR/joblist_humanoid2.txt}"
+[[ -f "$JOBLIST" ]] || { echo "ERROR: $JOBLIST not found. Run script to generate joblist_humanoid2.txt first."; exit 1; }
 
 # Get the line from joblist
 NLINES=$(wc -l < "$JOBLIST")
