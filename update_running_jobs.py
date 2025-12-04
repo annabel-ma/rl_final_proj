@@ -151,8 +151,8 @@ def main():
                 job_base = job_parts[0]
                 try:
                     array_id = int(job_parts[1])
-                    # Reverse jobs: 48488999 (might be), 48482358 (is reverse)
-                    is_reverse = ('reverse' in job_name.lower() or job_base == '48482358')
+                    # Reverse jobs: check job name for 'reverse' keyword
+                    is_reverse = ('reverse' in job_name.lower())
                     
                     # Determine which joblist this job uses by reading log files
                     joblist_file = get_joblist_for_job(job_id, job_base, SCRIPT_DIR, array_id,
