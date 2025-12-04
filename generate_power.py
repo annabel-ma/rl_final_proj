@@ -453,8 +453,8 @@ if len(power_empirical_df) > 0:
                     color = test_colors.get(test_name, '#000000')
                     ax.plot(test_data['target_n'], test_data['power'], 
                            marker='o', label=test_name, linewidth=2, color=color, markersize=6)
-                    # Add error bars (standard errors)
-                    ax.errorbar(test_data['target_n'], test_data['power'], 
+                        # Add error bars
+                        ax.errorbar(test_data['target_n'], test_data['power'],
                                yerr=test_data['se'], 
                                fmt='none', color=color, alpha=0.3, capsize=3)
             
@@ -508,20 +508,22 @@ if len(power_empirical_df) > 0:
 
 # ============================================================================
 # Generate Individual Power Plots for Each Algorithm Pair and Task
+# Subplot layout: 3 rows (epsilon: 0.5, 1.0, 2.0) × 2 columns (alpha: 0.01, 0.05)
 # ============================================================================
 
 if len(power_empirical_df) > 0:
     print("\n" + "="*60)
     print("Generating individual power plots for each algorithm pair and task")
+    print("Subplot layout: 3 rows (ε) × 2 columns (α)")
     print("="*60)
     
     # Create output subdirectory for individual plots
     plot_dir = os.path.join(OUTPUT_DIR, "power_plots")
     os.makedirs(plot_dir, exist_ok=True)
     
-    # Get all unique combinations
-    unique_combos = power_empirical_df.groupby(['task', 'algo1', 'algo2', 'alpha', 'epsilon']).size().reset_index()
-    print(f"\nFound {len(unique_combos)} unique (task, algo1, algo2, alpha, epsilon) combinations")
+    # Get all unique (task, algo1, algo2) combinations
+    unique_pairs = power_empirical_df.groupby(['task', 'algo1', 'algo2']).size().reset_index()
+    print(f"\nFound {len(unique_pairs)} unique (task, algo1, algo2) combinations")
     
     # Color map for tests (matching paper style)
     test_colors = {
@@ -533,94 +535,120 @@ if len(power_empirical_df) > 0:
         'permutation': '#bcbd22'       # yellow-green
     }
     
+    # Alpha and epsilon order
+    alpha_order = [0.01, 0.05]  # Columns: left to right
+    epsilon_order = [0.5, 1.0, 2.0]  # Rows: top to bottom
+    
     plots_created = 0
     
-    # Generate plot for each combination
-    for idx, row in unique_combos.iterrows():
+    # Generate one figure per (task, algo1, algo2) pair
+    for idx, row in unique_pairs.iterrows():
         task = row['task']
         algo1 = row['algo1']
         algo2 = row['algo2']
-        alpha = row['alpha']
-        epsilon = row['epsilon']
         
-        # Filter data for this combination
-        combo_data = power_empirical_df[
+        # Filter data for this pair
+        pair_data = power_empirical_df[
             (power_empirical_df['task'] == task) &
             (power_empirical_df['algo1'] == algo1) &
-            (power_empirical_df['algo2'] == algo2) &
-            (power_empirical_df['alpha'] == alpha) &
-            (power_empirical_df['epsilon'] == epsilon)
+            (power_empirical_df['algo2'] == algo2)
         ]
         
-        if len(combo_data) == 0:
+        if len(pair_data) == 0:
             continue
         
-        # Group by test and target_n
-        plot_data = combo_data.groupby(['test', 'target_n']).agg({
-            'power': 'mean',
-            'se': 'mean'
-        }).reset_index()
+        # Create figure with subplots: 3 rows × 2 columns
+        fig, axes = plt.subplots(3, 2, figsize=(14, 12))
+        fig.suptitle(f'Power vs Sample Size: {task}\n{algo1} vs {algo2}', 
+                     fontsize=16, fontweight='bold', y=0.995)
         
-        if len(plot_data) == 0:
-            continue
+        # Iterate over rows (epsilon) and columns (alpha)
+        for row_idx, epsilon in enumerate(epsilon_order):
+            for col_idx, alpha in enumerate(alpha_order):
+                ax = axes[row_idx, col_idx]
+                
+                # Filter data for this (alpha, epsilon) combination
+                combo_data = pair_data[
+                    (pair_data['alpha'] == alpha) &
+                    (pair_data['epsilon'] == epsilon)
+                ]
+                
+                if len(combo_data) == 0:
+                    ax.text(0.5, 0.5, 'No data', ha='center', va='center', transform=ax.transAxes)
+                    ax.set_title(f'α = {alpha:.2f}, ε = {epsilon:.1f}', fontsize=11)
+                    continue
+                
+                # Group by test and target_n
+                plot_data = combo_data.groupby(['test', 'target_n']).agg({
+                    'power': 'mean',
+                    'se': 'mean'
+                }).reset_index()
+                
+                if len(plot_data) == 0:
+                    ax.text(0.5, 0.5, 'No data', ha='center', va='center', transform=ax.transAxes)
+                    ax.set_title(f'α = {alpha:.2f}, ε = {epsilon:.1f}', fontsize=11)
+                    continue
+                
+                # Plot each test
+                for test_name in tests_list:
+                    test_data = plot_data[plot_data['test'] == test_name].sort_values('target_n')
+                    if len(test_data) > 0:
+                        color = test_colors.get(test_name, '#000000')
+                        ax.plot(test_data['target_n'], test_data['power'], 
+                               marker='o', label=test_name, linewidth=1.5, color=color, markersize=4)
+                        # Add error bars
+                        ax.errorbar(test_data['target_n'], test_data['power'], 
+                                   yerr=test_data['se'], 
+                                   fmt='none', color=color, alpha=0.3, capsize=2)
+                
+                # Add reference line at 0.8 power (target)
+                ax.axhline(y=0.8, color='red', linestyle='--', linewidth=1.5, 
+                          alpha=0.7, zorder=0)
+                
+                # Formatting
+                if row_idx == 2:  # Bottom row
+                    ax.set_xlabel('Sample size N (log scale)', fontsize=10)
+                if col_idx == 0:  # Left column
+                    ax.set_ylabel('Power (1 - β*)', fontsize=10)
+                
+                ax.set_title(f'α = {alpha:.2f}, ε = {epsilon:.1f}', fontsize=11, fontweight='bold')
+                ax.set_xscale('log')
+                
+                # Set x-axis ticks
+                available_n = sorted(plot_data['target_n'].unique())
+                ax.set_xticks(available_n)
+                ax.set_xticklabels([str(int(n)) for n in available_n], fontsize=9)
+                
+                # Y-axis: show from 0 to 1
+                ax.set_ylim([0, 1.05])
+                ax.set_yticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
+                ax.tick_params(axis='y', labelsize=9)
+                
+                ax.grid(True, alpha=0.3, which='both')
+                
+                # Add legend only to top-right subplot
+                if row_idx == 0 and col_idx == 1:
+                    ax.legend(loc='upper left', frameon=True, fontsize=8, ncol=2)
         
-        # Create figure
-        fig, ax = plt.subplots(1, 1, figsize=(10, 6))
-        
-        # Plot each test
-        for test_name in tests_list:
-            test_data = plot_data[plot_data['test'] == test_name].sort_values('target_n')
-            if len(test_data) > 0:
-                color = test_colors.get(test_name, '#000000')
-                ax.plot(test_data['target_n'], test_data['power'], 
-                       marker='o', label=test_name, linewidth=2, color=color, markersize=6)
-                # Add error bars (standard errors)
-                ax.errorbar(test_data['target_n'], test_data['power'], 
-                           yerr=test_data['se'], 
-                           fmt='none', color=color, alpha=0.3, capsize=3)
-        
-        # Add reference line at 0.8 power (target)
-        ax.axhline(y=0.8, color='red', linestyle='--', linewidth=2, 
-                  label='Power = 0.8', zorder=0)
-        
-        # Formatting
-        ax.set_xlabel('Sample size N (log scale)', fontsize=12)
-        ax.set_ylabel('Statistical Power (1 - β*)', fontsize=12)
-        ax.set_title(f'Power vs Sample Size: {task}\n{algo1} vs {algo2} (α = {alpha}, ε = {epsilon})', 
-                    fontsize=14, fontweight='bold')
-        ax.set_xscale('log')
-        
-        # Set x-axis ticks
-        available_n = sorted(plot_data['target_n'].unique())
-        ax.set_xticks(available_n)
-        ax.set_xticklabels([str(int(n)) for n in available_n])
-        
-        # Y-axis: show from 0 to 1
-        ax.set_ylim([0, 1.05])
-        ax.set_yticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
-        
-        ax.grid(True, alpha=0.3, which='both')
-        ax.legend(loc='best', frameon=True, fontsize=10, ncol=2)
-        
-        plt.tight_layout()
+        plt.tight_layout(rect=[0, 0, 1, 0.98])  # Leave space for suptitle
         
         # Save plot
         safe_task = task.replace('/', '_').replace('-', '_')
         safe_algo1 = algo1.replace('/', '_')
         safe_algo2 = algo2.replace('/', '_')
-        filename = f"power_{safe_task}_{safe_algo1}_vs_{safe_algo2}_alpha{alpha:.2f}_eps{epsilon:.1f}.png"
+        filename = f"power_{safe_task}_{safe_algo1}_vs_{safe_algo2}.png"
         filepath = os.path.join(plot_dir, filename)
         plt.savefig(filepath, bbox_inches='tight', dpi=150)
         plt.close()  # Close to free memory
         
         plots_created += 1
         
-        # Show progress every 20 plots
-        if plots_created % 20 == 0:
+        # Show progress every 5 plots
+        if plots_created % 5 == 0:
             print(f"Created {plots_created} plots...")
     
     print(f"\n{'='*60}")
-    print(f"Created {plots_created} individual power plots")
+    print(f"Created {plots_created} individual power plots (with subplots)")
     print(f"Plots saved to: {plot_dir}")
     print(f"{'='*60}")
     

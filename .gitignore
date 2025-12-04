@@ -46,3 +46,6 @@ submit_rl_auto.sbatch
 # Job lists (can be regenerated)
 joblist.txt
 joblist2.txt
+
+# submodule
+rl_stats/

@@ -19,7 +19,7 @@ cd /n/home09/annabelma/rl_final_proj
 
 # Run the analysis with unbuffered output (so output appears immediately)
 # Use -u flag or PYTHONUNBUFFERED=1 to disable Python output buffering
-python3 -u generate_power.py
+python3 -u generate_power_quick.py
 
 echo "Power analysis completed at $(date)"
 echo "Results saved to: ${POWER_OUTPUT_DIR:-/n/home09/annabelma/rl_final_proj/stat_results/12_4_results}"
