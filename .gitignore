@@ -54,6 +54,11 @@ joblist3.txt
 joblist4.txt
 joblist5.txt
 joblist6.txt
+joblist_e.txt
+joblist_humanoid_ppo.txt
+joblist_humanoid.txt
+joblist_humanoid2.txt
+joblist_ppo.txt
 
 # submodule
 rl_stats/
