@@ -2,12 +2,12 @@
 #SBATCH -J rl-training
 #SBATCH -c 1
 #SBATCH -t 0-72:00:00
-#SBATCH -p mweber_gpu
+#SBATCH -p gpu_requeue
 #SBATCH --mem=8000
 #SBATCH --open-mode=append
-#SBATCH -o /n/home09/annabelma/rl_final_proj/logs_mweber/rl_%A_%a.out
-#SBATCH -e /n/home09/annabelma/rl_final_proj/logs_mweber/rl_%A_%a.err
-#SBATCH --array=450-900%
+#SBATCH -o /n/home09/annabelma/rl_final_proj/logs_non_humanoid/rl_%A_%a.out
+#SBATCH -e /n/home09/annabelma/rl_final_proj/logs_non_humanoid/rl_%A_%a.err
+#SBATCH --array=1000-2203
 #SBATCH --account=dam_lab
 #SBATCH --gres=gpu:1
 
@@ -18,7 +18,7 @@
 # Example: --array=1-100%20 runs 100 jobs with max 20 running at once
 #
 # To update: Run ./prepare_submit.sh which auto-calculates the array size
-# Or manually: wc -l joblist.txt to get N, then update --array=1-N%M
+# Or manually: wc -l joblist3.txt to get N, then update --array=1-N%M
 
 # test with python train_rl.py --task "Hopper-v5" --algorithm "SAC" --seed 0
 
@@ -82,8 +82,8 @@ fi
 echo "==========================="
 
 # Job list file
-JOBLIST="${JOBLIST:-$SCRIPT_DIR/joblist.txt}"
-[[ -f "$JOBLIST" ]] || { echo "ERROR: $JOBLIST not found. Run generate_joblist.py first."; exit 1; }
+JOBLIST="${JOBLIST:-$SCRIPT_DIR/joblist3.txt}"
+[[ -f "$JOBLIST" ]] || { echo "ERROR: $JOBLIST not found. Run generate_joblist3.py first."; exit 1; }
 
 # Get the line from joblist
 NLINES=$(wc -l < "$JOBLIST")

@@ -19,6 +19,10 @@ logs_mweber/
 logs_whatsleft/
 logs_reverse/
 logs_new_script/
+logs_non_humanoid/
+logs_remaining_humanoid/
+plots_save_time/
+power_plots/
 *.out
 *.err
 
@@ -46,6 +50,10 @@ submit_rl_auto.sbatch
 # Job lists (can be regenerated)
 joblist.txt
 joblist2.txt
+joblist3.txt
+joblist4.txt
+joblist5.txt
+joblist6.txt
 
 # submodule
 rl_stats/
