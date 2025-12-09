@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=fpr
-#SBATCH --output=logs/fpr/12_7_%j.out
-#SBATCH --error=logs/fpr/12_7_%j.err
+#SBATCH --output=logs/fpr/fpr_%j.out
+#SBATCH --error=logs/fpr/fpr_%j.err
 #SBATCH --time=48:00:00
 #SBATCH --mem=8G
 #SBATCH --cpus-per-task=4
@@ -10,7 +10,7 @@
 # Optional: Set custom output directory via environment variable
 # Uncomment and modify the line below if needed:
 
-export FPR_OUTPUT_DIR=/n/home09/annabelma/rl_final_proj/stat_results/fpr/12_8_results
+export FPR_OUTPUT_DIR=/n/home09/annabelma/rl_final_proj/stat_results/fpr/12_8_6_pm_indiv_plots
 
 # Load modules if needed (adjust for your system)
 # module load python/3.9

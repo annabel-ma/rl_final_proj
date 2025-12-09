@@ -171,7 +171,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 print(f"Output directory: {OUTPUT_DIR}")
 
 # Statistical testing configuration
-SEED_GRID = [2, 3, 5, 10, 20, 30] #[5, 10, 20, 30, 50, 100, 150, 200]  # sample sizes per group for FPR/Power analysis 
+SEED_GRID = [2, 3, 5, 10, 20, 30, 50, 100] #[5, 10, 20, 30, 50, 100, 150, 200]  # sample sizes per group for FPR/Power analysis 
 ALPHAS = [0.05, 0.01]  # Significance levels
 EPSILONS = [0.5, 1.0, 2.0]  # cohen's d effect sizes for power analysis
 N_RESAMPLES = 1000  # number of bootstrap/permutation resamples (reduce for faster iteration)

@@ -34,7 +34,7 @@ echo "============================================================"
 # Optional: Set custom output directory via environment variable
 # Uncomment and modify the line below if needed:
 
-export POWER_OUTPUT_DIR=/n/home09/annabelma/rl_final_proj/power_experiments/results/12_8
+export POWER_OUTPUT_DIR=/n/home09/annabelma/rl_final_proj/power_experiments/results/12_8_6_pm
 
 # Change to script directory
 cd /n/home09/annabelma/rl_final_proj/power_experiments
