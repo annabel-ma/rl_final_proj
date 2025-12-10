@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=power_task_array
-#SBATCH --output=../logs/power/12_7_%A_%a.out
-#SBATCH --error=../logs/power/12_7_%A_%a.err
+#SBATCH --output=/n/home09/annabelma/rl_final_proj/power_experiments/logs/log_%A_%a.out
+#SBATCH --error=/n/home09/annabelma/rl_final_proj/power_experiments/logs/og_%A_%a.err
 #SBATCH --time=24:00:00
 #SBATCH --mem=8G
 #SBATCH --cpus-per-task=4
@@ -34,7 +34,7 @@ echo "============================================================"
 # Optional: Set custom output directory via environment variable
 # Uncomment and modify the line below if needed:
 
-export POWER_OUTPUT_DIR=/n/home09/annabelma/rl_final_proj/power_experiments/results/12_9
+export POWER_OUTPUT_DIR=/n/home09/annabelma/rl_final_proj/power_experiments/results/12_10_final 
 
 # Change to script directory
 cd /n/home09/annabelma/rl_final_proj/power_experiments
