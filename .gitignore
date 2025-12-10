@@ -65,3 +65,5 @@ humanoid_indices.txt
 
 # submodule
 rl_stats/
+
+deprecated/

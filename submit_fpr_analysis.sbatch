@@ -10,7 +10,7 @@
 # Optional: Set custom output directory via environment variable
 # Uncomment and modify the line below if needed:
 
-export FPR_OUTPUT_DIR=/n/home09/annabelma/rl_final_proj/stat_results/fpr/12_8_6_pm_indiv_plots
+export FPR_OUTPUT_DIR=/n/home09/annabelma/rl_final_proj/stat_results/fpr/12_9
 
 # Load modules if needed (adjust for your system)
 # module load python/3.9
